@@ -1,10 +1,12 @@
 package fr.esgi.rpg.jobs;
 import fr.esgi.rpg.Character;
+import fr.esgi.rpg.Faction;
 import fr.esgi.rpg.exceptions.CharacterDeadException;
 import fr.esgi.rpg.exceptions.CharacterSameException;
+import fr.esgi.rpg.exceptions.FactionException;
 
-public class Warriors extends Character {
-    public Warriors(String name) {
+public class Warrior extends Character {
+    public Warrior(String name) {
         super(name);
         getAttackPower();
         setHealing(1);
@@ -38,6 +40,11 @@ public class Warriors extends Character {
         if(this.sameFaction(target)){
             System.out.println("\nCan not attack member of the same Faction!");
             throw new CharacterSameException("Character in the same faction can not attack themselves!");
+        }
+
+        if(this.factionAreFriends(target)){
+            System.out.println("\n" + this.getName() + " is in a faction friends with a faction " + target.getName() + " is member of. Can not attack people from Friendly faction.");
+            throw new FactionException("Can not attack an ally of a friendly faction");
         }
 
         this.getAttackPower();

@@ -1,32 +1,26 @@
 package fr.esgi.rpg;
 
-import fr.esgi.rpg.exceptions.CharacterDeadException;
-import fr.esgi.rpg.exceptions.CharacterSameException;
-import fr.esgi.rpg.exceptions.FactionException;
 import fr.esgi.rpg.jobs.Mage;
-import fr.esgi.rpg.jobs.Warriors;
+import fr.esgi.rpg.jobs.Warrior;
 
 public class Application{
    public static void main(String[] args) throws Exception {
-     Warriors Muddy = new Warriors("Muddy");
-     Mage Euyinn = new Mage("Euyinn");
-     Mage Lola = new Mage("Lola");
-     Faction Lolita = new Faction("Lolita");
-     Lolita.addMember(Lola);
      Faction WizardSchool = new Faction("Wizard School");
+     Faction Monster = new Faction("Monster");
 
-     try{
-         WizardSchool.addMember(Euyinn);
-         WizardSchool.addMember(Muddy);
-         Muddy.attack(Lola);
-         WizardSchool.removeMember(Muddy);
-         Muddy.attack(Lola);
-         Lolita.addMember(Muddy);
-         Lolita.showMembers();
-         Lola.heal(Muddy);
-     } catch (FactionException e){
-         System.out.println(e.getMessage());
-     }
+     Mage Healer = new Mage("Healer");
+     Warrior Yolan = new Warrior("Yolan");
+     Warrior Godzilla = new Warrior("Godzilla");
+
+     Yolan.join(WizardSchool);
+     Godzilla.join(Monster);
+
+     Yolan.attack(Godzilla);
+     Healer.join(WizardSchool);
+     Healer.join(Monster);
+     Healer.showFactions();
+     WizardSchool.addAlly(Monster);
+     Healer.heal(Godzilla);
 
    }
 }

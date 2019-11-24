@@ -2,6 +2,7 @@ package fr.esgi.rpg;
 
 import fr.esgi.rpg.exceptions.CharacterDeadException;
 import fr.esgi.rpg.exceptions.CharacterSameException;
+import fr.esgi.rpg.exceptions.FactionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,21 @@ enum Status { DEAD(false), ALIVE(true); Status(boolean state) { this.state=state
 
 public abstract class Character {
     private int health;
+    public int getHealth() {
+        return health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
+        System.out.println("\n" + this.name + " have " + this.health + " health now.");
+    }
 
 
     private Status status;
+    public Status getStatus() {
+        return status;
+    }
+
+
     private String name;
     private String type;
     private long attack;
@@ -24,12 +37,20 @@ public abstract class Character {
         return Factions;
     }
 
-    public void addFaction(Faction faction) {
-        if(!this.Factions.contains(faction)) Factions.add(faction);
+    public void join(Faction faction) throws FactionException {
+        if(!this.Factions.contains(faction)){
+            System.out.println(this.name + " joined " + faction.getName());
+            Factions.add(faction);
+            faction.addMember(this);
+        }
     }
 
-    public void removeFaction(Faction faction){
-        if(this.Factions.contains(faction)) Factions.remove(faction);
+    public void leave(Faction faction) throws FactionException {
+        if(this.Factions.contains(faction)){
+            System.out.println(this.name + " left " + faction.getName());
+            Factions.remove(faction);
+            faction.removeFromFaction(this);
+        }
     }
 
     public boolean sameFaction(Character character){
@@ -37,9 +58,6 @@ public abstract class Character {
         return false;
     }
 
-    public Status getStatus() {
-        return status;
-    }
 
     public void setType(String type){
         this.type = type;
@@ -66,6 +84,14 @@ public abstract class Character {
         this.healing = healing;
     }
 
+    public boolean factionAreFriends(Character character){
+        for(Faction factionCharacter:character.getFactions()){
+            for(Faction factionOrigin:this.getFactions()){
+                if(factionOrigin.isFriend(factionCharacter)) return true;
+            }
+        }
+        return false;
+    }
 
     public String getName() {
         return name;
@@ -79,15 +105,6 @@ public abstract class Character {
         System.out.println("A new character " + name + " have been created.");
     }
 
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-        System.out.println("\n" + this.name + " have " + this.health + " health now.");
-    }
 
     public boolean isAlive() {
         return this.status == Status.ALIVE;
@@ -111,5 +128,13 @@ public abstract class Character {
         if(health < 0) this.health = 0;
         if(health > 100) this.health = 100;
         else this.health = health;
+    }
+
+    public void showFactions(){
+        System.out.println("FACTION " + this.name + " IS MEMBER OF");
+        System.out.println("-----------");
+        for(Faction faction:getFactions()){
+            System.out.println(faction.getName());
+        }
     }
 }

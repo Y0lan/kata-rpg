@@ -46,7 +46,7 @@ public class Mage extends Character {
 
         if(this != target) System.out.println("\n" + target.getName() + " is being healed by " + this.getName());
 
-        if(!this.sameFaction(target)) throw new CharacterSameException("\nA character can only heal people of his own Faction");
+        if(!this.sameFaction(target) && !this.factionAreFriends(target)) throw new CharacterSameException("\nA character can only heal people of his own Faction or friendly faction");
         this.getHealingPower();
         System.out.println("healing power set at : " + this.getHealing());
         target.SetHealth((int) (target.getHealth() + this.getHealing()));
