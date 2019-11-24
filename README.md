@@ -1,6 +1,5 @@
 # kata-rpg
 # Solution to kata RPG
-# Kata RPG
 
 ## First iteration: Characters
 
