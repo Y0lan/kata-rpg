@@ -5,24 +5,19 @@ import fr.esgi.rpg.exceptions.CharacterSameException;
 import fr.esgi.rpg.exceptions.MageException;
 
 public class Mage extends Character {
+
+    /* CONSTRUCTOR */
     public Mage(String name) {
         super(name);
         getHealingPower();
         setAttack(0);
         setType("Mage");
-        getInformation();
-    }
-
-    public void getInformation(){
-        System.out.println("Name : " + this.getName());
-        System.out.println("Health : " + this.getHealth());
-        System.out.println("Status: " + this.getStatus());
-        System.out.println("Attack: " + this.getAttack());
-        System.out.println("Healing: " + this.getHealing());
+        this.getInformation();
     }
 
 
-    void getHealingPower(){
+
+    private void getHealingPower(){
         this.setHealing((int) Math.round((Math.random() * 5) + 5));
     }
 
@@ -46,10 +41,10 @@ public class Mage extends Character {
 
         if(this != target) System.out.println("\n" + target.getName() + " is being healed by " + this.getName());
 
-        if(!this.sameFaction(target) && !this.factionAreFriends(target)) throw new CharacterSameException("\nA character can only heal people of his own Faction or friendly faction");
+        if(!this.noFaction() && !this.sameFaction(target) && !this.factionAreFriends(target)) throw new CharacterSameException("\nA character can only heal people of his own Faction or friendly faction");
         this.getHealingPower();
         System.out.println("healing power set at : " + this.getHealing());
-        target.SetHealth((int) (target.getHealth() + this.getHealing()));
+        target.setHealth((int) (target.getHealth() + this.getHealing()));
         System.out.println("\n" + target.getName() + " got +" + this.getHealing() + " point of health!");
         System.out.println("\n" + target.getName() + " health : " + target.getHealth());
     }

@@ -1,26 +1,21 @@
 package fr.esgi.rpg.jobs;
+
 import fr.esgi.rpg.Character;
-import fr.esgi.rpg.Faction;
 import fr.esgi.rpg.exceptions.CharacterDeadException;
 import fr.esgi.rpg.exceptions.CharacterSameException;
 import fr.esgi.rpg.exceptions.FactionException;
 
 public class Warrior extends Character {
+
+    /* CONSTRUCTOR */
     public Warrior(String name) {
         super(name);
         getAttackPower();
         setHealing(1);
         setType("Warrior");
-        getInformation();
+        this.getInformation();
     }
 
-    public void getInformation(){
-        System.out.println("Name : " + this.getName());
-        System.out.println("Health : " + this.getHealth());
-        System.out.println("Status: " + this.getStatus());
-        System.out.println("Attack: " + this.getAttack());
-        System.out.println("Healing: " + this.getHealing());
-    }
 
 
     public void attack(Character target) throws Exception {
@@ -50,11 +45,12 @@ public class Warrior extends Character {
         this.getAttackPower();
         System.out.println("\n" + target.getName() + " took " + this.getAttack() + " damage!");
         target.setHealth((int) (target.getHealth() - this.getAttack()));
+        System.out.println("\n" + target.getName()+ " have "+ target.getHealth() + " health left on 100.");
 
         if(target.getHealth() == 0) target.setDead();
     }
 
-    public void getAttackPower(){
+    private void getAttackPower(){
         this.setAttack(Math.round(Math.random() * 9));
     }
     public void heal(Character target) throws Exception {
@@ -63,6 +59,7 @@ public class Warrior extends Character {
             System.out.println("\n" + this.getName() + "is dead." + this.getName() + " can not heal.");
             throw new CharacterDeadException("Dead character trying to heal.");
         }
+
         System.out.println("\n" + this.getName() + " healed himself!");
         System.out.println("\n" + this.getName() + " got +" + this.getHealing() + " point of health!");
         target.setHealth(this.getHealth() + (int) this.getHealing());
