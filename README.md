@@ -52,7 +52,3 @@
 ## Seventh iteration: Factions \#3
 
 * A `Character` may now belong to one or more `Faction`s...
-
-### Me contacter hors des cours : vfries1 @ myges.fr
-### Rendu du TP sur myGES *obligatoire* avant 17h15
-### Une étape de rendu facultative est ouverte jusqu'à dimanche 23h59 pour les groupes qui souhaitent terminer.
